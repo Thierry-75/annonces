@@ -1,0 +1,39 @@
+
+{% if articles  is defined %}
+{% for article in articles %}
+                    <!-- card  -->
+                    <div class="testimonial-card flex-shrink-0 w-full md:w-1/2 lg:w-1/3 px-4 animate-fade">
+                        <div class="relative"><a href="{{ path('app_article_index',{slug:article.slug}) }}">
+                                <img class="h-56 w-full rounded-t-md shadow-md"
+                                     src="{{ asset('assets/uploads/articles/') ~ article.photos[2].name }}"
+                                     alt="{{ article.photos[2].name }}">
+                                <div
+                                    class="hover:bg-transparent transition duration-300 absolute bottom-0 top-0 right-0 left-0 bg-gray-100 opacity-25">
+                                </div>
+                            </a>
+                            <a href="{{ path('app_article_index',{slug:article.slug}) }}">
+                                <div class="text-sm rounded-md shadow-lg absolute top-0 right-0 bg-amber-400 px-4 py-2 text-neutral-900 mt-3 mr-3 hover:bg-amber-500 hover:text-neutral-900 transition duration-500 ease-in-out">
+                                    Voir
+                                </div>
+                            </a>
+                        </div>
+                        <div class="bg-white p-8 rounded-b-2xl shadow-lg h-full border border-gray-100">
+                            <a href="{{ path('app_article_index',{slug:article.slug}) }}">
+                                <h4 class="text-md text-left text-cyan-600 mb-4">{{ article.title }}</h4></a>
+                            <p class="text-neutral-800 text-xs italic">{{ article.contenu | u.truncate(200,'...'|raw) }}</p>
+                            <div class="flex items-center mt-5">
+                                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&h=200&q=80"
+                                     alt="Sarah Johnson"
+                                     class="w-10 h-10 rounded-lg shadow-lg object-cover mr-4" />
+                                <div>
+                                    <h4 class="font-semibold text-gray-800">Sarah Johnson</h4>
+                                    <p class="text-gray-500 text-sm">{{ article.createdAt | date('l, j F Y à H:i') }}</p>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+{% endfor %}
+
+{% endif %}

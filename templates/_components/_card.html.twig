@@ -1,0 +1,67 @@
+
+{% if articles is defined %}
+{% for article in articles %}
+
+<!-- CARD 1 -->
+<div class="rounded overflow-hidden shadow-lg flex flex-col">
+    <a href="#"></a>
+    <div class="relative"><a href="{{ path('app_article_index',{slug:article.slug}) }}">
+            <img class="h-56 w-full rounded-t-md shadow-md"
+                 src="{{ asset('assets/uploads/articles/') ~ article.photos[0].name  }}"
+                 alt="{{ article.photos[1].name }}">
+            <div
+                class="hover:bg-transparent transition duration-300 absolute bottom-0 top-0 right-0 left-0 bg-gray-900 opacity-25">
+            </div>
+        </a>
+        <a href="{{ path('app_article_index',{slug:article.slug}) }}">
+            <div class="text-sm rounded-md shadow-lg absolute top-0 right-0 bg-amber-400 px-4 py-2 text-neutral-900 mt-3 mr-3 hover:bg-amber-500 hover:text-neutral-900 transition duration-500 ease-in-out">
+                Voir
+            </div>
+        </a>
+    </div>
+    <div class="px-6 py-4 mb-auto">
+        <a href="{{ path('app_article_index',{slug:article.slug}) }}"
+           class="font-medium text-lg text-cyan-700 hover:text-cyan-800 transition duration-500 ease-in-out inline-block mb-2">{{ article.title }}</a>
+        <p class="text-gray-500 text-sm">
+            {{ article.contenu | u.truncate(200,'...'|raw) }}
+        </p>
+        <ul class="flex flex-row justify-start text-xs mt-2">
+        {% for tag in article.tags %}
+                <li><span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-lg text-xs font-medium bg-neutral-200 text-black dark:bg-blue-800/30 dark:text-blue-500">{{ tag.name }}</span></li>
+            {% if not loop.last %}
+                <span>&nbsp;</span>
+            {% endif %}
+        {% endfor %}
+        </ul>
+    </div>
+
+    <div class="px-6 py-3 flex flex-row items-center justify-between bg-gray-100">
+                <span href="#" class="py-1 text-xs font-regular text-gray-900 mr-1 flex flex-row items-center">
+                    <svg height="13px" width="13px" version="1.1" id="Layer_1"
+                         xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+                         y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;"
+                         xml:space="preserve">
+                        <g>
+                            <g>
+                                <path
+                                    d="M256,0C114.837,0,0,114.837,0,256s114.837,256,256,256s256-114.837,256-256S397.163,0,256,0z M277.333,256 c0,11.797-9.536,21.333-21.333,21.333h-85.333c-11.797,0-21.333-9.536-21.333-21.333s9.536-21.333,21.333-21.333h64v-128 c0-11.797,9.536-21.333,21.333-21.333s21.333,9.536,21.333,21.333V256z">
+                                </path>
+                            </g>
+                        </g>
+                    </svg>
+                    <span class="ml-1">{{ article.createdAt | date('l, j F Y à H:i') }}</span>
+                </span>
+
+        <span href="#" class="py-1 text-xs font-regular text-gray-900 mr-1 flex flex-row items-center">
+                    <svg class="h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z">
+                        </path>
+                    </svg>
+                    <span class="ml-1">39 Comments</span>
+                </span>
+    </div>
+</div>
+
+{% endfor %}
+{% endif %}
