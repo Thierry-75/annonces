@@ -21,8 +21,8 @@ class ChangePasswordType extends AbstractType
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'options' => [
-                    'attr' => [ 'class'=>'input-gray block w-full p-2.5','required'=>true,'autocomplete' => 'new-password',
-                    ],'label_attr'=>['class'=>'text-xs text-cyan-600']
+                    'attr' => [ 'class'=>'input-email','required'=>true,'autocomplete' => 'new-password',
+                    ],'label_attr'=>['class'=>'text-sm text-gray-600']
                 ],
                 'first_options' => [
                     'constraints' => [
@@ -33,10 +33,10 @@ class ChangePasswordType extends AbstractType
                             )
                         ])
                     ],
-                    'label' => 'Mot de passe',
+                    'label' => 'New password',
                 ],
                 'second_options' => [
-                    'label' => 'Confimation',
+                    'label' => 'Confirm',
                 ],
                 'invalid_message' => 'The password fields must match.',
                 // Instead of being set onto the object directly,

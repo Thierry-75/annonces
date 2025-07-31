@@ -3,17 +3,49 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+    <div class="p-10">
+        <h1 class="mb-8 font-extrabold text-4xl">Register</h1>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 
-    {{ form_errors(registrationForm) }}
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+            {{ form_errors(registrationForm) }}
+            {{ form_start(registrationForm) }}
+            <div class="block">
+                {{ form_row(registrationForm.email,{attr:{class:'w-full shadow-inner bg-gray-100 rounded-lg placeholder-black text-md p-2.5 border-none block mt-1'}}) }}
+            </div>
+            <div class="block mt-1.5">
+                {{ form_row(registrationForm.name,{attr:{class:'w-full shadow-inner bg-gray-100 rounded-lg placeholder-black text-md p-2.5 border-none block mt-1'}}) }}
+            </div>
+            <div class="block mt-1.5">
+                {{ form_row(registrationForm.firstname,{attr:{class:'w-full shadow-inner bg-gray-100 rounded-lg placeholder-black text-md p-2.5 border-none block mt-1'}}) }}
+            </div>
+            <div class="block mt-1.5">
+                {{ form_row(registrationForm.plainPassword,{attr:{class:'w-full shadow-inner bg-gray-100 rounded-lg placeholder-black text-md p-2.5 border-none block mt-1'}}) }}
+            </div>
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+            <div class="block mt-2">
+            <label class="block text-gray-500 font-bold">
+                {{ form_row(registrationForm.agreeTerms,{att:{class:'pr-10'}}) }}
+            </label>
+            </div>
+
+            <div class="flex items-center justify-between mt-6">
+                <button type="submit" class="flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-2.5 md:text-lg md:px-10">Register</button>
+                <a href="{{ path('app_login') }}" class="text-md text-cyan-600 hover:text-neutral-900">Already register ?</a>
+            </div>
+            {{ form_end(registrationForm) }}
+
+            <aside class="mt-8">
+                <div class="bg-neutral-50 p-8 rounded">
+                    <h2 class="font-bold text-2xl">Instructions</h2>
+                    <ul class="list-disc mt-4 list-inside">
+                        <li>All users must provide a valid email address and password to create an account.</li>
+                        <li>Users must not use offensive, vulgar, or otherwise inappropriate language in their username or profile information</li>
+                        <li>Users must not create multiple accounts for the same person.</li>
+                    </ul>
+                </div>
+            </aside>
+
+        </div>
+    </div>
 {% endblock %}

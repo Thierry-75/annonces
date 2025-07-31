@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Email;
@@ -18,8 +19,8 @@ class RequestPasswordType extends AbstractType
         $builder
             ->add('email', EmailType::class, [
                 'attr' => [
-                    'class' => 'input-gray',
-                    'placeholder' => 'Adresse Email',
+
+                    'placeholder' => 'Email address',
                     'autofocus' => true,
                     'required' => true,
                     'mapped'=>false
@@ -30,7 +31,8 @@ class RequestPasswordType extends AbstractType
                         new Email(message: 'L\'adresse courriel {{ value }} est incorrecte.',)
                     ])
                 ]
-            ]);
+            ])
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
