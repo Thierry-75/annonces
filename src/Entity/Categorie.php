@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Trait\SluggerTrait;
 use App\Repository\CategorieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -10,6 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: CategorieRepository::class)]
 class Categorie
 {
+    use SluggerTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -18,8 +21,6 @@ class Categorie
     #[ORM\Column(length: 100)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $slug = null;
 
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'categories')]
     private ?self $parent = null;
@@ -55,18 +56,6 @@ class Categorie
     public function setName(string $name): static
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getSlug(): ?string
-    {
-        return $this->slug;
-    }
-
-    public function setSlug(string $slug): static
-    {
-        $this->slug = $slug;
 
         return $this;
     }
@@ -141,5 +130,9 @@ class Categorie
         }
 
         return $this;
+    }
+    public function __toString():string
+    {
+        return $this->name;
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\Entity\Trait\CreatedAtTrait;
+use App\Entity\Trait\SluggerTrait;
 use App\Repository\AnnonceRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -9,25 +11,21 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: AnnonceRepository::class)]
 class Annonce
 {
+    use SluggerTrait;
+    use CreatedAtTrait;
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $titile = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $slug = null;
+    private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
-
-    #[ORM\Column]
-    private ?bool $active = null;
+    #[ORM\Column(nullable: false)]
+    private ?bool $active = false;
 
     #[ORM\ManyToOne(inversedBy: 'annonces')]
     #[ORM\JoinColumn(nullable: false)]
@@ -42,26 +40,14 @@ class Annonce
         return $this->id;
     }
 
-    public function getTitile(): ?string
+    public function getTitle(): ?string
     {
-        return $this->titile;
+        return $this->title;
     }
 
-    public function setTitile(string $titile): static
+    public function setTitle(string $title): static
     {
-        $this->titile = $titile;
-
-        return $this;
-    }
-
-    public function getSlug(): ?string
-    {
-        return $this->slug;
-    }
-
-    public function setSlug(string $slug): static
-    {
-        $this->slug = $slug;
+        $this->title = $title;
 
         return $this;
     }
@@ -74,18 +60,6 @@ class Annonce
     public function setContent(string $content): static
     {
         $this->content = $content;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
-    {
-        $this->createdAt = $createdAt;
 
         return $this;
     }
@@ -124,5 +98,10 @@ class Annonce
         $this->categorie = $categorie;
 
         return $this;
+    }
+
+    public function __toString():string
+    {
+        return $this->title;
     }
 }
