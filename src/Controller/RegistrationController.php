@@ -9,6 +9,7 @@ use App\Service\IntraController;
 use App\Service\JwtService;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,6 +21,9 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class RegistrationController extends AbstractController
 {
+    /**
+     * @throws ExceptionInterface
+     */
     #[Route('/register', name: 'app_register',methods: ['GET','POST'])]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher,
        EntityManagerInterface $entityManager, ValidatorInterface $validator,IntraController $intraController,
@@ -27,35 +31,37 @@ class RegistrationController extends AbstractController
     ): Response
     {
         $user = new User();
-        $form = $this->createForm(RegistrationFormType::class, $user);
+        $form = $this->createForm(RegistrationFormType::class,$user);
         $form->handleRequest($request);
         if($request->isMethod('POST')){
             $errors = $validator->validate($request);
             if(count($errors)>0){
-                return $this->render('registration/register.html.twig', ['registrationForm' => $form->createView(),'errors'=>$errors]);
+                return $this->render('registration/register.html.twig',['registrationForm'=>$form->createView(),'errors'=>$errors]);
             }
         }
-        if ($form->isSubmitted() && $form->isValid()) {
-            /** @var string $plainPassword encode the plain password **/
-            $user->setPassword($userPasswordHasher->hashPassword($user, $form->get('plainPassword')->getData()))
-                 ->setRoles(['ROLE_USER']);
-
+        if($form->isSubmitted() && $form->isValid()){
+            $user->setPassword($userPasswordHasher->hashPassword($user,$form->get('plainPassword')->getData()))
+                ->setRoles(['ROLE_USER'])
+                ->setCreatedAt(new \DateTimeImmutable());
             try {
                 $entityManager->persist($user);
                 $entityManager->flush();
-            }catch(EntityNotFoundException $e){
+            }catch (EntityNotFoundException $e) {
+                return $this->redirectToRoute('app_error', ['exception'=>$e]);
+            }
+            try {
+                $subject = "Activation de votre compte";
+                $destination = 'check_user';
+                $nomTemplate = 'register';
+                $intraController->emailValidate($user, $jwtService, $messageBus, $destination, $subject, $nomTemplate);
+                $this->addFlash('alert-warning', 'SVP, confirmez votre adresse email');
+                return $this->redirectToRoute('app_home');
+            }catch(Exception $e){
                 return $this->redirectToRoute('app_error',['exception'=>$e]);
             }
-            // send an email with rabbitmq async
-            try {
-                $intraController->emailValidate($user, $jwtService, $messageBus, 'check_user', 'Ouverture de votre compte', 'register');
-            } catch (ExceptionInterface) {
-            }
-            $this->addFlash('alert-warning','Veuillez confirmer votre adresse email.');
-            return $this->redirectToRoute('app_home');
-        }
 
-        return $this->render('registration/register.html.twig', ['registrationForm' => $form->createView(),]);
+        }
+        return $this->render('registration/register.html.twig',['registrationForm'=>$form->createView()]);
     }
 
     #[Route('/check/{token}',name:'check_user')]

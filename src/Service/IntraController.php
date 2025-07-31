@@ -15,7 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class IntraController extends AbstractController
 {
-    protected const string WEBMASTER = 'webmaster@my-domain.org';
+    protected const  WEBMASTER = 'webmaster@my-domain.org';
 
     /**
      * email validation function

@@ -7,21 +7,8 @@ use Symfony\Component\Messenger\Attribute\AsMessage;
 #[AsMessage('async')]
 final class SendActivationMessage
 {
-    private string $from;
-    private string $to;
-    private string $subject;
-    private string $template;
-    private array $context;
-
-
-    public function __construct($from, $to, $subject, $template, $context)
-    {
-        $this->from = $from;
-        $this->to = $to;
-        $this->subject = $subject;
-        $this->template = $template;
-        $this->context = $context;
-    }
+    public function __construct(private $from, private $to,private $subject,private $template,private $context)
+    {}
 
     /**
      * Get the value of from
