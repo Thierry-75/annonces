@@ -35,6 +35,9 @@
             "migrations/.gitignore"
         ]
     },
+    "emileperron/tinymce-bundle": {
+        "version": "v3.2.1"
+    },
     "phpunit/phpunit": {
         "version": "12.2",
         "recipe": {

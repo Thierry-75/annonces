@@ -3,25 +3,28 @@
 {% block title %}Add Category{% endblock %}
 
 {% block body %}
+<div class="grid grid-cols-12 gap-4 mt-1">
+    <div class="col-span-1 ">
+        {% include './_components/sidebar.html.twig' %}
+    </div>
+    <div class="col-span-11 mt-10">
     <div class="p-10">
-        <h1 class="mb-8 font-extrabold text-cyan-700 text-4xl">Add category</h1>
+        <h1 class="mb-8 font-extrabold text-cyan-700 text-2xl md:text-4xl">Add category</h1>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-
-
-            {{ form_errors(form) }}
             {{ form_start(form) }}
             <div class="block">
                 {{ form_row(form.name,{attr:{class:'w-full shadow-inner bg-gray-100 rounded-lg placeholder-black text-md p-2.5 border-none block mt-1'}}) }}
             </div>
-            <div class="flex items-center justify-between mt-6">
+            <div class="flex items-center justify-end mt-6">
                 {{ form_widget(form.submit,{attr:{class:'btn-retour-court'}}) }}
             </div>
             {{ form_end(form) }}
 
-            <aside class="mt-8">
+            <aside class="mt-1">
                 <div class="bg-neutral-50 p-8 rounded">
-                    <h2 class="font-bold text-2xl">Instructions</h2>
-                    <ul class="list-disc mt-4 list-inside">
+                    <h2 class="font-bold text-md md:text-2xl">Instructions</h2>
+                    <ul class="list-disc mt-4 list-inside text-xs md:text-lg">
+                        <li>  {{ form_errors(form) }}</li>
                         <li>All users must provide a valid email address and password to create an account.</li>
                         <li>Users must not use offensive, vulgar, or otherwise inappropriate language in their username or profile information</li>
                         <li>Users must not create multiple accounts for the same person.</li>
@@ -31,4 +34,6 @@
 
         </div>
     </div>
+    </div>
+</div>
 {% endblock %}

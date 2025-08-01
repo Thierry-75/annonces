@@ -1,20 +1,74 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello UserController!{% endblock %}
+{% block title %}{{ app.user.firstname }}&nbsp;{{ app.user.name }}{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<div class="grid grid-cols-12 gap-4 mt-1">
+    <div class="col-span-2">
+        {% include './_components/sidebar.html.twig' %}
+    </div>
+    <div class="col-span-10 mt-8 mb-10">
+        <div class="bg-neutral-50 shadow-sm shadow-gray-400 overflow-hidden shadow rounded-lg border ml-2 mr-5">
+            <div class="px-4 py-3 sm:px-6">
+                <h3 class="text-lg text-justify leading-6 font-medium text-cyan-800">
+                    User Profile
+                </h3>
+                <p class="mt-1 max-w-2xl text-lg text-cyan-700">
+                    Information about {{ app.user.firstname }}&nbsp;{{ app.user.name }}
+                </p>
+            </div>
+            <div class="border-t border-cyan-700 px-4 py-5 sm:p-0">
+                <dl class="sm:divide-y sm:divide-gray-200">
+                    <div class="py-2.5 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">
+                            Email address:
+                        </dt>
+                        <dd class="mt-1 text-lg text-cyan-700 sm:mt-0 sm:col-span-2">
+                            {{ app.user.email }}
+                        </dd>
+                    </div>
+                    <div class="py-2.5 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">
+                            Full name:
+                        </dt>
+                        <dd class="mt-1 text-lg text-cyan-700 sm:mt-0 sm:col-span-2">
+                            {{ app.user.firstname }}&nbsp;{{ app.user.name }}
+                        </dd>
+                    </div>
+                </dl>
+            </div>
+            <div class="border-t border-cyan-700 px-4 py-5 sm:p-0">
+            <div class="px-4 py-3 sm:px-6">
+                <h3 class="text-lg leading-6 font-medium text-cyan-800">
+                    Announces:
+                </h3>
+                <p class="mt-1 max-w-2xl text-sm text-gray-500">
+                    {% if app.user.annonces|length == 1  %}
+                    link to your {{ app.user.annonces | length }} announce
+                    {% elseif app.user.annonces | length > 1 %}
+                    link to yours {{ app.user.annonces | length }} announces
+                    {% else %}
+                    you don't have any announce.
+                    {% endif %}
+                </p>
+            </div>
+                <div class="border-t border-cyan-700 px-4 py-5 sm:p-0">
+                    <dl class="sm:divide-y sm:divide-gray-200">
+                        {% for annonce in app.user.annonces  %}
+                        <div class="py-2.5 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-sm font-medium text-gray-500">
+                               Announce n° {{ loop.index }}
+                            </dt>
+                            <dd class="mt-1 text-sm text-cyan-800 sm:mt-0 sm:col-span-2">
+                                <a href="#" class="text-cyan-700 text-lg justify-center rounded hover:text-cyan-800" >{{ annonce.title }} {# mettre lien vers annonce #}</a>
+                            </dd>
+                            </div>
+                        {% endfor %}
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/home/titi/Symfony/Annonces/src/Controller/UserController.php</code></li>
-        <li>Your template at <code>/home/titi/Symfony/Annonces/templates/user/index.html.twig</code></li>
-    </ul>
+                    </dl>
+                </div>
+        </div>
+    </div>
+    </div>
 </div>
 {% endblock %}

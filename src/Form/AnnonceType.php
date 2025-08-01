@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use EmilePerron\TinymceBundle\Form\Type\TinymceType;
 
 class AnnonceType extends AbstractType
 {
@@ -21,11 +22,14 @@ class AnnonceType extends AbstractType
     {
         $builder
             ->add('title',TextType::class)
-            ->add('content',TextareaType::class
+            ->add('content',TinymceType::class,['attr'=>["toolbar"=>'undo redo | bold italic | forecolor backcolor |
+             template | alignleft aligncenter alignright alignjustify | bullist numlist | link | spellchecker',
+                    'height'=>250,'class'=>'w-full']]
             )
             ->add('categorie', EntityType::class, [
                 'class' => Categorie::class,
-                'placeholder'=>'Choose category',
+                'label'=>'Category',
+                'placeholder'=>'Choose a category',
                 'choice_label' => 'name',
             ])
             ->add('submit',SubmitType::class)

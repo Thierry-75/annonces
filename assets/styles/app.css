@@ -89,6 +89,7 @@
     .input-register{
         @apply shadow-inner bg-gray-100 rounded-lg placeholder-black text-lg p-2.5 border-none block mt-1 w-full;
     }
-
-
 }
+
+.bottom-full{bottom: 100%}
+.top-full{top: 100%}
