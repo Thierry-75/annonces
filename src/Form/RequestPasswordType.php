@@ -25,10 +25,12 @@ class RequestPasswordType extends AbstractType
                     'required' => true,
                     'mapped'=>false
                 ],
+                'label'=>'Email',
+                'label_attr'=>['class'=>'text-sm block text-gray-500 font-bold'],
                 'constraints' => [
                     new Sequentially([
                         new NotBlank(message: ""),
-                        new Email(message: 'L\'adresse courriel {{ value }} est incorrecte.',)
+                        new Email(message: 'the address email {{ value }} is wrong.',)
                     ])
                 ]
             ])

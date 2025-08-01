@@ -6,22 +6,22 @@
 <div class="min-h-screen flex items-center justify-center">
     <div class="bg-white p-8 rounded-lg shadow-lg w-96">
         <div class="text-center mb-8">
-            <h1 class="text-3xl font-bold text-gray-800">Welcome Back</h1>
+            <h1 class="text-3xl font-bold text-cyan-700">Welcome Back</h1>
             <p class="text-gray-500">Sign in to continue </p>
         </div>
 
         <form id="loginForm" class="space-y-6" method="post">
             <div>
-                <label for="email" class=".label-form">Email</label>
-                <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="input-login" autocomplete="email" required autofocus>
+                <label for="email" class="label-form text-sm">Address email</label>
+                <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="input-register" autocomplete="email" required autofocus>
             </div>
 
             <div>
-                <label for="password" class=".label-form">Password</label>
-                <input type="password" name="password" id="inputPassword" class="input-password" autocomplete="current-password" required>
+                <label for="password" class="label-form text-sm">Password</label>
+                <input type="password" name="password" id="inputPassword" class="input-register" autocomplete="current-password" required>
             </div>
             <input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
-            <button type="submit" class="btn-submit">
+            <button type="submit" class="btn-retour py-4">
                 Sign in
             </button>
         </form>
@@ -33,7 +33,7 @@
                 </div>
                 <div class="relative flex justify-center text-sm">
                     <span class="px-2 bg-white text-gray-500">
-                        <a href="{{ path('forgotten_password') }}" class="text-xs text-cyan-600 hover:text-neutral-900">forget password ?</a>
+                        <a href="{{ path('forgotten_password') }}" class="text-sm text-cyan-800 hover:text-cyan-900">forget password ?</a>
                     </span>
                 </div>
             </div>

@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="p-10">
-        <h1 class="mb-8 font-extrabold text-4xl">Register</h1>
+        <h1 class="mb-8 font-extrabold text-cyan-700 text-4xl">Register</h1>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 
 
@@ -30,8 +30,8 @@
             </div>
 
             <div class="flex items-center justify-between mt-6">
-                <button type="submit" class="flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-2.5 md:text-lg md:px-10">Register</button>
-                <a href="{{ path('app_login') }}" class="text-md text-cyan-600 hover:text-neutral-900">Already register ?</a>
+                <button type="submit" class="flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-cyan-700 hover:bg-cyan-800 md:py-2.5 md:text-lg md:px-10">Register</button>
+                <a href="{{ path('app_login') }}" class="text-md text-cyan-700 hover:text-neutral-900">Already register ?</a>
             </div>
             {{ form_end(registrationForm) }}
 

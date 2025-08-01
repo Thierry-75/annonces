@@ -21,8 +21,8 @@ class ChangePasswordType extends AbstractType
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'options' => [
-                    'attr' => [ 'class'=>'input-email','required'=>true,'autocomplete' => 'new-password',
-                    ],'label_attr'=>['class'=>'text-sm text-gray-600']
+                    'attr' => [ 'class'=>'input-register','required'=>true,'autocomplete' => 'new-password',
+                    ],'label_attr'=>['class'=>'text-sm block text-gray-500 font-bold']
                 ],
                 'first_options' => [
                     'constraints' => [

@@ -24,7 +24,7 @@ final class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/notice/add', name: 'user_notice_add',methods: ['GET','POST'])]
+    #[Route('/notice/add', name: 'notice_add',methods: ['GET','POST'])]
     public function addNotice(Request $request,ValidatorInterface $validator,
         SluggerInterface $slugger,EntityManagerInterface $entityManager
     ): Response
