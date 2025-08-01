@@ -28,7 +28,7 @@ class AnnonceType extends AbstractType
                 'placeholder'=>'Choose category',
                 'choice_label' => 'name',
             ])
-            ->add('submit',SubmitType::class,['attr'=>['class'=>'btn-submit']])
+            ->add('submit',SubmitType::class)
             ->addEventListener(FormEvents::POST_SUBMIT,$this->addDate(...))
         ;
     }

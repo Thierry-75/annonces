@@ -54,7 +54,7 @@ class RegistrationController extends AbstractController
                 $destination = 'check_user';
                 $nomTemplate = 'register';
                 $intraController->emailValidate($user, $jwtService, $messageBus, $destination, $subject, $nomTemplate);
-                $this->addFlash('alert-warning', 'SVP, confirmez votre adresse email');
+                $this->addFlash('alert-warning', 'Confirm your address email, please.');
                 return $this->redirectToRoute('app_home');
             }catch(Exception $e){
                 return $this->redirectToRoute('app_error',['exception'=>$e]);
@@ -76,13 +76,13 @@ class RegistrationController extends AbstractController
                 $user->setIsVerified(true);
                 $entityManager->persist($user);
                 $entityManager->flush();
-                $this->addFlash('alert-success','Compte activé');
+                $this->addFlash('alert-success','Count created');
                 return $this->redirectToRoute('app_login');
             }catch(EntityNotFoundException $e){
                 return $this->redirectToRoute('app_error',['exception'=>$e]);
             }
         }
-        $this->addFlash('alert-danger','Token expiré !');
+        $this->addFlash('alert-danger','Token off !');
         return $this->redirectToRoute('app_login');
 
     }

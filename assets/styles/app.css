@@ -13,6 +13,9 @@
     .btn-retour {
         @apply w-full px-3 py-2.5 text-sm font-medium shadow-md rounded-md text-center text-white bg-cyan-700 hover:bg-cyan-800 focus:ring-4 focus:outline-none;
     }
+    .btn-retour-court{
+        @apply flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-cyan-700 hover:bg-cyan-800 md:py-2.5 md:text-lg md:px-10;
+    }
     .btn-amber {
         @apply ml-4 px-4 py-2 rounded-md text-sm font-medium min-w-max overflow-hidden shadow-sm shadow-gray-400 relative bg-amber-400 text-stone-950 hover:bg-opacity-90;
     }

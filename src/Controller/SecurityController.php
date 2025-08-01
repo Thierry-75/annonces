@@ -69,8 +69,8 @@ class SecurityController extends AbstractController
                 $inscrit->setResetToken($token);
                 $entityManager->flush();
                 $url = $this->generateUrl('reset_password',['token'=>$token], UrlGeneratorInterface::ABSOLUTE_URL);
-                $messageBus->dispatch(new SendActivationMessage(self::WEBMASTER,$inscrit->getEmail(),'Demande de nouveau mot de passe','password_reset',['url'=>$url,'user'=>$inscrit]));
-                $this->addFlash('alert-warning',"Lien d'activation nouveau mot de passe envoyé.");
+                $messageBus->dispatch(new SendActivationMessage(self::WEBMASTER,$inscrit->getEmail(),'request for a new password','password_reset',['url'=>$url,'user'=>$inscrit]));
+                $this->addFlash('alert-warning',"Link for new password send !");
                 return $this->redirectToRoute('app_home');
             }catch(EntityNotFoundException $e)
             {
@@ -111,9 +111,9 @@ class SecurityController extends AbstractController
                             $entityManager->persist($inscrit);
                             $entityManager->flush();
                             $url = $this->generateUrl('app_home',[], UrlGeneratorInterface::ABSOLUTE_URL);
-                            $messageBus->dispatch(new SendActivationMessage(self::WEBMASTER,$inscrit->getEmail(),'Nouveau mot de passe','new_password',
+                            $messageBus->dispatch(new SendActivationMessage(self::WEBMASTER,$inscrit->getEmail(),'New password','new_password',
                             ['user'=>$inscrit, 'url'=>$url]));
-                            $this->addFlash('alert-success','Votre mot de passe a été modifié.');
+                            $this->addFlash('alert-success','password has been modified.');
                             return $this->redirectToRoute('app_login');
                         }catch(EntityNotFoundException $e){
                             return $this->redirectToRoute('app_error',['exception'=>$e]);

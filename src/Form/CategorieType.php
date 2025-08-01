@@ -20,7 +20,7 @@ class CategorieType extends AbstractType
             //    'class' => Categorie::class,
             //    'choice_label' => 'id',
             //])
-            ->add('Submit',SubmitType::class)
+            ->add('submit',SubmitType::class)
         ;
     }
 
