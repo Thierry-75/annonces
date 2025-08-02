@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Admin;
 
 use App\Entity\Categorie;
 use App\Form\CategorieType;
@@ -34,7 +34,7 @@ final class AdminController extends AbstractController
         if($request->isMethod('POST')){
             $errors = $validator->validate($request);
             if(count($errors)>0){
-                return $this->render('admin/categorie/add.html.twig',['form'=>$form->createView(),'errors'=>$errors]);
+                return $this->render('edit.html.twig',['form'=>$form->createView(),'errors'=>$errors]);
             }
             if($form->isSubmitted() && $form->isValid()){
                 try{
@@ -48,6 +48,6 @@ final class AdminController extends AbstractController
                 }
             }
         }
-        return $this->render('admin/categorie/add.html.twig',['form'=>$form->createView()]);
+        return $this->render('edit.html.twig',['form'=>$form->createView()]);
     }
 }

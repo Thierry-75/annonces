@@ -7,8 +7,11 @@
  */
 import './styles/app.css';
 
+
+
 import './js/alert.js';
 import './js/nav.js';
+
 
 
 console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');

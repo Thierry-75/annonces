@@ -16,10 +16,11 @@ class CategorieType extends AbstractType
     {
         $builder
             ->add('name',TextType::class)
-            //->add('parent', EntityType::class, [
-            //    'class' => Categorie::class,
-            //    'choice_label' => 'id',
-            //])
+            ->add('parent', EntityType::class, [
+                'class' => Categorie::class,
+                'placeholder'=>'Choose a category',
+                'choice_label' => 'name',
+            ])
             ->add('submit',SubmitType::class)
         ;
     }
