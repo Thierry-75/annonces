@@ -6,6 +6,7 @@ use App\Entity\Annonce;
 use App\Form\AnnonceType;
 use App\Form\ChangePasswordType;
 use App\Form\EditProfileType;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,9 +23,25 @@ final class UserController extends AbstractController
     #[Route('/index', name: 'index',methods: ['GET'])]
     public function index(): Response
     {
-        return $this->render('user/index.html.twig', [
-            'controller_name' => 'UserController',
-        ]);
+        $this->denyAccessUnlessGranted('ROLE_USER');
+        if(!$this->getUser()){
+            $this->addFlash('alert-danger','Forbidden access, only for users connected ');
+        }
+        return $this->render('user/index.html.twig');
+    }
+
+    #[Route('/all', name: 'all',methods: ['GET'])]
+    public function allUsers(UserRepository $userRepository): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+        if(!$this->getUser()){
+            $this->addFlash('alert-danger','Forbidden access, only for users connected ');
+        }
+        try {
+            return $this->render('user/all.html.twig',['users'=>$userRepository->findAll()]);
+        }catch(EntityNotFoundException $e){
+            return $this->redirectToRoute('app_error',['exception'=>$e]);
+        }
     }
 
     #[Route('/notice/add', name: 'notice_add',methods: ['GET','POST'])]

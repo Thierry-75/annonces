@@ -5,7 +5,7 @@
 {% block body %}
     <div class="grid grid-cols-12 gap-4 mt-1">
         <div class="col-span-1 ">
-            {% include '_components/sidebar.html.twig' %}
+            {% include '_components/sidebar-root.html.twig' %}
         </div>
 
         <div class="col-span-11 mt-10 ml-10 mr-10">
@@ -28,9 +28,6 @@
                                 <div>
                                     <a href="{{ path('admin_category_add') }}" ><button type="button" class="btn-amber py-2">Add Category</button></a>
                                 </div>
-
-
-
                             </div>
                             <div class="overflow-hidden">
                                 <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
@@ -51,7 +48,7 @@
                                     <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                                     {% if categories is defined %}
                                     {% for categorie in categories %}
-                                        <tr>
+                                        <tr class="hover:bg-gray-100">
                                             <td class="py-3 ps-4">
                                                 <div class="flex items-center h-5">
                                                     <input id="hs-table-pagination-checkbox-1" type="checkbox" class="border-gray-200 rounded text-blue-600 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800">

@@ -3,12 +3,12 @@
 {% block title %}management announces{% endblock %}
 
 {% block importmap %}
-    {{ importmap(['modal']) }}
+    {{ importmap(['modal_announce']) }}
 {% endblock %}
 {% block body %}
     <div class="grid grid-cols-12 gap-4 mt-1">
         <div class="col-span-1 mt-0 ">
-            {% include '_components/sidebar.html.twig' %}
+            {% include '_components/sidebar-root.html.twig' %}
         </div>
 
         <div class="col-span-11 mt-10 ml-10 mr-10">
@@ -45,7 +45,7 @@
                                     <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                                     {% if announces is defined %}
                                     {% for announce in announces %}
-                                        <tr>
+                                        <tr class="hover:bg-gray-100">
 
                                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">{{ announce.id }}</td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">{{ announce.title | capitalize }}</td>
@@ -69,6 +69,7 @@
                                     </tbody>
                                 </table>
                             </div>
+
                             <div class="py-1 px-4">
                                 <nav class="flex items-center space-x-1">
                                     <button type="button" class="p-2.5 inline-flex items-center gap-x-2 text-sm rounded-full text-gray-800 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-white/10 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
@@ -91,18 +92,27 @@
         </div>
     </div>
     <!---modal---->
-    <div class="modal" id="modal" role="dialog">
+    <div class="modal relative" id="modal" role="dialog">
         <div class="modal-content">
-            <div class="modal-close" data-dismiss="dialog">X</div>
-            <div class="modal-header bg-cyan-600 text-white">
-                <p>Delete announce</p>
+            <div class="modal-close text-white" data-dismiss="dialog">X</div>
+            <div class="modal-header bg-cyan-600 text-xs font-light md:text-base text-white shadow-lg">
+                <p>Delete</p>
             </div>
-            <div class="modal-body">
-                <p>Are you sure to delete this announce ?</p>
+            <div class="modal-body text-xs text-cyan-800 font-light md:text-base bg-gray-50">
+                <p>Are you sure ?</p>
             </div>
-            <div class="modal-footer">
-                <a href="#" class="btn-rouge" role="button"  data-dismiss="dialog-delete">Confirm</a>
-                <a href="#" class="btn-amber" data-dismiss="dialog" role="button" >Close</a>
+            <div class="modal-footer bg-gray-50">
+                <button class="btn-rouge py-1 shadow-md" role="button"  data-dismiss="dialog-delete">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+                        <path fill-rule="evenodd" d="M5 3.25V4H2.75a.75.75 0 0 0 0 1.5h.3l.815 8.15A1.5 1.5 0 0 0 5.357 15h5.285a1.5 1.5 0 0 0 1.493-1.35l.815-8.15h.3a.75.75 0 0 0 0-1.5H11v-.75A2.25 2.25 0 0 0 8.75 1h-1.5A2.25 2.25 0 0 0 5 3.25Zm2.25-.75a.75.75 0 0 0-.75.75V4h3v-.75a.75.75 0 0 0-.75-.75h-1.5ZM6.05 6a.75.75 0 0 1 .787.713l.275 5.5a.75.75 0 0 1-1.498.075l-.275-5.5A.75.75 0 0 1 6.05 6Zm3.9 0a.75.75 0 0 1 .712.787l-.275 5.5a.75.75 0 0 1-1.498-.075l.275-5.5a.75.75 0 0 1 .786-.711Z" clip-rule="evenodd"></path>
+                    </svg>
+                </button>
+                <button class="btn-amber py-1 shadow-md" data-dismiss="dialog" role="button" >
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+                        <path fill-rule="evenodd" d="M14 4.75A2.75 2.75 0 0 0 11.25 2h-3A2.75 2.75 0 0 0 5.5 4.75v.5a.75.75 0 0 0 1.5 0v-.5c0-.69.56-1.25 1.25-1.25h3c.69 0 1.25.56 1.25 1.25v6.5c0 .69-.56 1.25-1.25 1.25h-3c-.69 0-1.25-.56-1.25-1.25v-.5a.75.75 0 0 0-1.5 0v.5A2.75 2.75 0 0 0 8.25 14h3A2.75 2.75 0 0 0 14 11.25v-6.5Zm-9.47.47a.75.75 0 0 0-1.06 0L1.22 7.47a.75.75 0 0 0 0 1.06l2.25 2.25a.75.75 0 1 0 1.06-1.06l-.97-.97h7.19a.75.75 0 0 0 0-1.5H3.56l.97-.97a.75.75 0 0 0 0-1.06Z" clip-rule="evenodd"></path>
+                    </svg>
+
+                </button>
             </div>
         </div>
     </div>
