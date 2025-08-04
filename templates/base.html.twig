@@ -15,10 +15,10 @@
         {% endblock %}
     </head>
     <body class="bg-neutral-50">
-      {% include "./_components/_nav.html.twig" %}
-      {% include './_components/_alert.html.twig' %}
+      {% include "/_components/_nav.html.twig" %}
+      {% include '/_components/_alert.html.twig' %}
       {% block body %}
-      <div class="container mx-auto mb-8">
+      <div class="container mx-auto mb-6">
               {% block left %}
 
               {% endblock %}
@@ -27,6 +27,6 @@
               {% endblock %}
       </div>
       {% endblock %}
-    {% include './_components/_footer.html.twig' %}
+    {% include '/_components/_footer.html.twig' %}
     </body>
 </html>

@@ -5,7 +5,7 @@
 {% block body %}
 <div class="grid grid-cols-12 gap-4 mt-1">
     <div class="col-span-2">
-        {% include './_components/sidebar.html.twig' %}
+        {% include '/_components/sidebar.html.twig' %}
     </div>
     <div class="col-span-10 mt-8 mb-10">
         <div class="bg-neutral-50 shadow-sm shadow-gray-400 overflow-hidden shadow rounded-lg border ml-2 mr-5">
@@ -60,7 +60,7 @@
                                Announce n° {{ loop.index }}
                             </dt>
                             <dd class="mt-1 text-sm text-cyan-800 sm:mt-0 sm:col-span-2">
-                                <a href="#" class="text-cyan-700 text-lg justify-center rounded hover:text-cyan-800" >{{ annonce.title }} {# mettre lien vers annonce #}</a>
+                                <a href="{{ path('announce_show',{slug:annonce.slug}) }}" class="text-cyan-700 text-lg justify-center rounded hover:text-cyan-800" >{{ annonce.title }} {# mettre lien vers annonce #}</a>
                             </dd>
                             </div>
                         {% endfor %}

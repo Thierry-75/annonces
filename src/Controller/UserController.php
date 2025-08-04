@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Annonce;
+use App\Entity\Photo;
 use App\Form\AnnonceType;
 use App\Form\ChangePasswordType;
 use App\Form\EditProfileType;
 use App\Repository\UserRepository;
+use App\Service\PhotoService;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,6 +22,9 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 #[Route('/user',name:'user_')]
 final class UserController extends AbstractController
 {
+    protected const  ANNOUNCES = "announces";
+    protected const  WEBMASTER = 'webmaster@my-domain.org';
+
     #[Route('/index', name: 'index',methods: ['GET'])]
     public function index(): Response
     {
@@ -46,11 +51,11 @@ final class UserController extends AbstractController
 
     #[Route('/notice/add', name: 'notice_add',methods: ['GET','POST'])]
     public function addNotice(Request $request,ValidatorInterface $validator,
-        SluggerInterface $slugger,EntityManagerInterface $entityManager
+        SluggerInterface $slugger,EntityManagerInterface $entityManager,PhotoService $photoService
     ): Response
     {
-        $notice = new Annonce();
-        $form = $this->createForm(AnnonceType::class,$notice);
+        $announce = new Annonce();
+        $form = $this->createForm(AnnonceType::class,$announce);
         $form->handleRequest($request);
         if($request->isMethod('POST')){
             $errors = $validator->validate($request);
@@ -58,13 +63,28 @@ final class UserController extends AbstractController
                 return $this->render('user/annonce/add.html.twig',['form'=>$form->createView(),'errors'=>$errors]);
             }
             if($form->isSubmitted() && $form->isValid()){
-                $notice->setUser($this->getUser());
-                $notice->setSlug($slugger->slug(strtolower($form->get('title')->getData())));
+                $photos = $form->get('photos')->getData();
+                $count = 1;
+                foreach ($photos as $photo){
+                    if($photo->getClientOriginalExtension()==='jpeg' || $photo->getClientOriginalExtension()==='jpg'){
+                        try{
+                            $announce->setUser($this->getUser());
+                            $announce->setSlug($slugger->slug(strtolower($form->get('title')->getData())));
+                            $fichier = $photoService->add($photo,$announce->getSlug().'-'.$count,self::ANNOUNCES,1000,1000);
+                            $image = new Photo();
+                            $image->setName($fichier);
+                            $announce->addPhoto($image);
+                            $count++;
+                        }catch (\Exception $e){
+                            return $this->redirectToRoute('app_error',['exception'=>$e]);
+                        }
+                    }
+                }
                 try {
-                    $entityManager->persist($notice);
+                    $entityManager->persist($announce);
                     $entityManager->flush();
-                    $this->addFlash('alert-success', 'Ad created');
-                    return $this->redirectToRoute('user_index');
+                    $this->addFlash('alert-success', 'Announce has been created.');
+                    return $this->redirectToRoute('announce_show',['slug'=>$announce->getSlug()]);
                 }catch(EntityNotFoundException $e){
                     return $this->redirectToRoute('app_error',['exception'=>$e]);
                 }

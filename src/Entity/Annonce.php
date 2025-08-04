@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Entity\Trait\CreatedAtTrait;
 use App\Entity\Trait\SluggerTrait;
 use App\Repository\AnnonceRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -34,6 +36,24 @@ class Annonce
     #[ORM\ManyToOne(inversedBy: 'annonces')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Categorie $categorie = null;
+
+    /**
+     * @var Collection<int, Photo>
+     */
+    #[ORM\OneToMany(targetEntity: Photo::class, mappedBy: 'announce',cascade: ['persist','remove'] ,orphanRemoval: true)]
+    private Collection $photos;
+
+    /**
+     * @var Collection<int, User>
+     */
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'favoris')]
+    private Collection $favoris;
+
+    public function __construct()
+    {
+        $this->photos = new ArrayCollection();
+        $this->favoris = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -103,5 +123,59 @@ class Annonce
     public function __toString():string
     {
         return $this->title;
+    }
+
+    /**
+     * @return Collection<int, Photo>
+     */
+    public function getPhotos(): Collection
+    {
+        return $this->photos;
+    }
+
+    public function addPhoto(Photo $photo): static
+    {
+        if (!$this->photos->contains($photo)) {
+            $this->photos->add($photo);
+            $photo->setAnnounce($this);
+        }
+
+        return $this;
+    }
+
+    public function removePhoto(Photo $photo): static
+    {
+        if ($this->photos->removeElement($photo)) {
+            // set the owning side to null (unless already changed)
+            if ($photo->getAnnounce() === $this) {
+                $photo->setAnnounce(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getFavoris(): Collection
+    {
+        return $this->favoris;
+    }
+
+    public function addFavori(User $favori): static
+    {
+        if (!$this->favoris->contains($favori)) {
+            $this->favoris->add($favori);
+        }
+
+        return $this;
+    }
+
+    public function removeFavori(User $favori): static
+    {
+        $this->favoris->removeElement($favori);
+
+        return $this;
     }
 }

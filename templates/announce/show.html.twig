@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ announce.title }}{% endblock %}
+
+{% block importmap %}
+
+{% endblock %}
+
+{% block body %}
+    {% if app.user %}
+        <div class="grid grid-cols-12 gap-4 mt-1">
+            <div class="col-span-1 ">
+        {% include '/_components/sidebar.html.twig' %}
+            </div>
+            <div class="col-span-11">
+        {% include '/_components/announce.html.twig' %}
+            </div>
+        </div>
+    {% elseif announce.active == true %}
+        {% include '/_components/announce.html.twig' %}
+    {% endif %}
+{% endblock %}

@@ -4,17 +4,19 @@ namespace App\Form;
 
 use App\Entity\Annonce;
 use App\Entity\Categorie;
-use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Event\PostSubmitEvent;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use EmilePerron\TinymceBundle\Form\Type\TinymceType;
+use Symfony\Component\Validator\Constraints\Count;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Sequentially;
 
 class AnnonceType extends AbstractType
 {
@@ -31,6 +33,25 @@ class AnnonceType extends AbstractType
                 'label'=>'Category',
                 'placeholder'=>'Choose a category',
                 'choice_label' => 'name',
+            ])
+            ->add('photos',FileType::class, options: [
+                'multiple'=>true,
+                'mapped'=>false,
+                'attr'=>['class'=>'w-full bg-white px-3 py-3.5 mt-3 mb-4 text-xl rounded-lg shadow-md shadow-black'],
+                'label'=>'Upload 3 photos',
+                'label_attr' => ['class' => 'block text-lg font-medium text-cyan-800 mb-1 ml-2'],
+                'constraints'=>[
+                    new Sequentially([
+                        new NotBlank(message: '3 Photos '),
+                        new Count(
+                            min: 1,
+                            max: 3,
+                            exactMessage: '3 photos !',
+                            minMessage: '3 photos SVP',
+                            maxMessage: '3 photos SVP'
+                        )
+                    ])
+                ]
             ])
             ->add('submit',SubmitType::class)
             ->addEventListener(FormEvents::POST_SUBMIT,$this->addDate(...))
