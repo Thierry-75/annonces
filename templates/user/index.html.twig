@@ -15,7 +15,7 @@
                 </h3>
                 <p class="mt-1 max-w-2xl text-lg text-cyan-700">
                     Information about {{ app.user.firstname }}&nbsp;{{ app.user.name }}
-                </p>
+                </p>  <p class="text-end"><a href="{{ path('user_data_download') }}"><button class="btn-azur justify-end">Download your data</button></a></p>
             </div>
             <div class="border-t border-cyan-700 px-4 py-5 sm:p-0">
                 <dl class="sm:divide-y sm:divide-gray-200">

@@ -11,6 +11,8 @@ use App\Repository\UserRepository;
 use App\Service\PhotoService;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -145,5 +147,38 @@ final class UserController extends AbstractController
         return $this->render('user/editPassword.html.twig',['form'=>$form->createView()]);
     }
 
+    #[Route('/data/download', name: 'data_download',methods: ['GET'])]
+    public function userDataDownload(): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+        if(!$this->getUser()){
+            $this->addFlash('alert-danger','Forbidden access, only for users connected ');
+        }
+
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont','Arial');
+        $pdfOptions->setIsRemoteEnabled(true);
+
+        $dompdf = new Dompdf($pdfOptions);
+        $context = stream_context_create([
+            'ssl'=>[
+                'verify_peer'=>FALSE,
+                'verify_peer_name'=>FALSE,
+                'allow_self_signed'=>TRUE
+            ]
+        ]);
+        $dompdf->setHttpContext($context);
+        //generation du html
+        $html = $this->renderView('user/download.html.twig');
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4','portrait');
+        $dompdf->render();
+        $user = $this->getUser();
+        $fichier = 'user-data-'.$user->getFirstName().'-'.$user->getName().'.pdf';
+        $dompdf->stream($fichier, [
+            'Attachement'=>true
+        ]);
+        return new Response();
+    }
 
 }
