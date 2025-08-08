@@ -29,6 +29,18 @@ final class AnnounceController extends AbstractController
         }
     }
 
+    #[Route('/show/{id}', name: 'show',methods: ['GET'])]
+    public function show(Annonce $annonce): Response
+    {
+        try {
+            return $this->render('admin/announce/show.html.twig', [
+                'announce'=>$annonce
+            ]);
+        }catch(EntityNotFoundException $e){
+            return $this->redirectToRoute('app_error',['exception'=>$e]);
+        }
+    }
+
 
 
     #[Route('/modify/{id}', name: 'modify',methods: ['GET','POST'])]

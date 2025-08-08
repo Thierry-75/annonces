@@ -26,6 +26,9 @@ doctrine:
                 alias: App
         controller_resolver:
             auto_mapping: false
+        dql:
+            string_functions:
+                MATCH_AGAINST: DoctrineExtensions\Query\Mysql\MatchAgainst
 
 when@test:
     doctrine:
@@ -52,3 +55,5 @@ when@prod:
                     adapter: cache.app
                 doctrine.system_cache_pool:
                     adapter: cache.system
+
+

@@ -59,8 +59,8 @@
                             <dt class="text-sm font-medium text-gray-500">
                                Announce n° {{ loop.index }}
                             </dt>
-                            <dd class="mt-1 text-sm text-cyan-800 sm:mt-0 sm:col-span-2">
-                                <a href="{{ path('announce_show',{slug:annonce.slug}) }}" class="text-cyan-700 text-lg justify-center rounded hover:text-cyan-800" >{{ annonce.title }} {# mettre lien vers annonce #}</a>
+                            <dd class="mt-1 text-cyan-800 sm:mt-0 sm:col-span-2">
+                                <a href="{{ path('announce_show',{slug:annonce.slug}) }}" class="text-cyan-700 text-sm justify-center rounded hover:text-cyan-800" >{{ annonce.title }} {# mettre lien vers annonce #}</a>
                             </dd>
                             </div>
                         {% endfor %}

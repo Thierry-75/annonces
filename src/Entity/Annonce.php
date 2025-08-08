@@ -11,6 +11,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AnnonceRepository::class)]
+#[ORM\Index(name: "FULLTEXT__TITLE_CONTENT", fields: ['title','content'], flags: ['fulltext'])]
 class Annonce
 {
     use SluggerTrait;

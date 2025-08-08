@@ -19,12 +19,9 @@ window.onload = () => {
             console.log(modalDelete);
             for(let supprime of modalDelete){
                 supprime.addEventListener("click",function(){
-
-                    document.querySelector(".modal-footer a").href = `/admin/announce/delete/${id}`;
+                    let cible = document.querySelector(".modal-footer a")
+                        cible.href = `/admin/announce/delete/${id}`;
                     modal.classList.remove("show");
-
-
-
                 });
             }
 
@@ -33,21 +30,17 @@ window.onload = () => {
             for(let close of modalClose){
                 close.addEventListener("click", () => {
                     modal.classList.remove("show");
-
                 });
             }
 
             // On gère la fermeture lors du clic sur la zone grise
             modal.addEventListener("click", function(){
                 modal.classList.remove("show");
-
             });
             // On évite la propagation du clic d'un enfant à son parent
             modal.children[0].addEventListener("click", function(e){
                 e.stopPropagation();
             })
-
-
         });
     }
     let active = document.querySelectorAll("[type=checkbox]");
@@ -55,11 +48,9 @@ window.onload = () => {
         button.addEventListener("click",function(){
             let xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = () => {
-
             }
             xmlhttp.open("get",`/admin/announce/active/${this.dataset.id}`)
             xmlhttp.send()
         });
     }
-
 }

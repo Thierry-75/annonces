@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Site en maintenance{% endblock %}</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+        {% block importmap %}{% endblock %}
+    {% endblock %}
+</head>
+<body class="bg-neutral-50">
+
+{% block body %}
+    <div class="container mx-auto mt-44">
+
+        <div class="min-h-screen flex flex-col justify-center items-center">
+            <img src="https://www.svgrepo.com/show/426192/cogs-settings.svg" alt="Logo" class="h-16 w-16 mb-8">
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-center text-gray-700 dark:text-white mb-4">We'll be back soon!</h1>
+            <p class="text-center text-gray-500 dark:text-gray-300 text-lg md:text-xl lg:text-2xl mb-8">Sorry for the inconvenience. We’re performing some maintenance at the moment.</p>
+            <div class="flex space-x-4">
+                <a href="#"
+                   class="border-2 border-gray-800 text-black font-bold py-3 px-6 rounded dark:text-white dark:border-white">Reload</a>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+</body>
+</html>
