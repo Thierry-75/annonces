@@ -16,7 +16,11 @@ class AnnonceRepository extends ServiceEntityRepository
         parent::__construct($registry, Annonce::class);
     }
 
-
+    /**
+     * @param $mots
+     * @param $category
+     * @return mixed
+     */
     public function search($mots = null,$category = null)
     {
         $query = $this->createQueryBuilder('a')
@@ -32,6 +36,27 @@ class AnnonceRepository extends ServiceEntityRepository
 
         }
         return $query->getQuery()->getResult();
+    }
+
+    /**
+     * @param $page
+     * @param $limit
+     * @return void
+     */
+    public function findPaginateAnnounces($page,$limit){
+        $query = $this->createQueryBuilder('a')
+            ->where('a.active = 1')
+            ->orderBy('a.createdAt')
+            ->setFirstResult(($page * $limit) -$limit)
+            ->setMaxResults($limit);
+        return $query->getQuery()->getResult();
+    }
+
+    public function findTotalAnnounces(){
+        $query = $this->createQueryBuilder('a')
+            ->select('COUNT(a)')
+            ->where('a.active = 1');
+        return $query->getQuery()->getSingleScalarResult();  // return un result under characters form
     }
 
     //    /**

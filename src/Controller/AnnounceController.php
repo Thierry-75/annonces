@@ -2,13 +2,12 @@
 
 namespace App\Controller;
 
-use App\Entity\Annonce;
+
 use App\Repository\AnnonceRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/announces',name:'announce_')]
@@ -16,13 +15,23 @@ final class AnnounceController extends AbstractController
 {
     /**
      * @param AnnonceRepository $annonceRepository
+     * @param Request $request
      * @return Response
      */
-    #[Route('/list', name: 'list')]
-    public function index(AnnonceRepository $annonceRepository): Response
+    #[Route('/', name: 'list')]
+    public function index(AnnonceRepository $annonceRepository, Request $request): Response
     {
+        // nombre d'elements par page
+        $limit =3;
+
+        $page = (int)$request->query->get('page',1);
+
+        $announces = $annonceRepository->findPaginateAnnounces($page,$limit);
+
+        $total = $annonceRepository->findTotalAnnounces();
+
         return $this->render('announce/index.html.twig', [
-            'announces'=>$annonceRepository->findBy(['active'=>true],['createdAt'=>'desc'])]);
+            'announces'=>$announces,'total'=>$total,'limit'=>$limit,'page'=>$page]);
     }
 
     /**

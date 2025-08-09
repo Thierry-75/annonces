@@ -156,8 +156,8 @@ final class UserController extends AbstractController
         }
 
         $pdfOptions = new Options();
-        $pdfOptions->set('defaultFont','Arial');
-        $pdfOptions->setIsRemoteEnabled(true);
+        $pdfOptions->set('defaultFont','Arial')
+                    ->setIsRemoteEnabled(true);
 
         $dompdf = new Dompdf($pdfOptions);
         $context = stream_context_create([

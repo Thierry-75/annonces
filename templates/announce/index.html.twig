@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AnnounceController!{% endblock %}
+{% block title %}List announces{% endblock %}
 
 {% block body %}
     {% if announces is defined %}
@@ -31,7 +31,39 @@
                     </div>
                 </div>
             </div>
-
         {% endfor %}
+        <ul class="col-span-12 mx-auto mt-12 grid grid-cols-4 grid-rows-2 items-center gap-0.5 px-4 py-4 pb-8 sm:flex sm:justify-center">
+            <li class="{{ (page == 1) ? 'disabled' : '' }}">
+                <a href="?page=1" class="h-10 rounded-full shadow-md w-10 bg-neutral-100 hover:bg-neutral-300 font-semibold text-black text-sm flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m11 17-5-5 5-5"></path><path d="m18 17-5-5 5-5"></path></svg>
+                </a>
+            </li>
+                    <li class="{{ (page == 1) ? 'disabled' : '' }}">
+                        <a href="{{ (page > 1 ) ? '?page=' ~ (page - 1) : '' }}"
+                           class="h-10 w-10 rounded-full shadow-md bg-neutral-100 hover:bg-neutral-300 font-semibold text-black text-sm flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>
+                        </a>
+                    </li>
+            {% set pages = ((total / limit) | round(0, 'ceil'))  %} {# nombre de pages #}
+            {% for item in 1..pages %}
+                    <li class="{{ (page == item) ? 'bg-cyan-600 rounded rounded-cyan-600' : '' }}">
+                        <a href="?page={{ item }}" class="h-10 w-10 rounded-full shadow-md bg-neutral-100 hover:bg-neutral-300 font-semibold text-black text-sm flex items-center justify-center">
+                            {{ item }}
+                        </a>
+                    </li>
+            {% endfor %}
+            <li class="{{ (page == pages) ? 'disabled' : '' }}">
+                <a href="{{ (page < pages ) ? '?page=' ~ (page + 1) : '' }}"
+                   class="h-10 w-10 rounded-full shadow-md bg-neutral-100 hover:bg-neutral-300 font-semibold text-black text-sm flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg>
+                </a>
+            </li>
+            <li class="{{ (page == pages) ? 'disabled' : '' }}">
+                <a href="?page= {{ pages }}"
+                   class="h-10 w-10 rounded-full shadow-md bg-neutral-100 hover:bg-neutral-300 font-semibold text-black text-sm flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 17 5-5-5-5"></path><path d="m13 17 5-5-5-5"></path></svg>
+                </a>
+            </li>
+        </ul>
     {% endif %}
 {% endblock %}
