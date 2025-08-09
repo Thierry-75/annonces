@@ -21,7 +21,7 @@ class AnnonceRepository extends ServiceEntityRepository
      * @param $category
      * @return mixed
      */
-    public function search($mots = null,$category = null)
+    public function search($mots = null,$category = null): mixed
     {
         $query = $this->createQueryBuilder('a')
             ->where('a.active = 1');
@@ -43,7 +43,8 @@ class AnnonceRepository extends ServiceEntityRepository
      * @param $limit
      * @return void
      */
-    public function findPaginateAnnounces($page,$limit){
+    public function findPaginateAnnounces($page,$limit)
+    {
         $query = $this->createQueryBuilder('a')
             ->where('a.active = 1')
             ->orderBy('a.createdAt')
@@ -52,6 +53,9 @@ class AnnonceRepository extends ServiceEntityRepository
         return $query->getQuery()->getResult();
     }
 
+    /**
+     * @return bool|float|int|mixed|string|null
+     */
     public function findTotalAnnounces(){
         $query = $this->createQueryBuilder('a')
             ->select('COUNT(a)')

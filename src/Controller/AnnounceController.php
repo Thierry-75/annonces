@@ -22,7 +22,7 @@ final class AnnounceController extends AbstractController
     public function index(AnnonceRepository $annonceRepository, Request $request): Response
     {
         // nombre d'elements par page
-        $limit =3;
+        $limit =6;
 
         $page = (int)$request->query->get('page',1);
 

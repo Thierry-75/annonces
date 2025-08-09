@@ -37,6 +37,9 @@ class Categorie
     #[ORM\OneToMany(targetEntity: Annonce::class, mappedBy: 'categorie')]
     private Collection $annonces;
 
+    #[ORM\Column(length: 10)]
+    private ?string $color = null;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
@@ -134,5 +137,17 @@ class Categorie
     public function __toString():string
     {
         return $this->name;
+    }
+
+    public function getColor(): ?string
+    {
+        return $this->color;
+    }
+
+    public function setColor(string $color): static
+    {
+        $this->color = $color;
+
+        return $this;
     }
 }
